@@ -43,7 +43,6 @@ main() {
   # Check if there is a linked docker postgresql instance
   if [ -n "$MONGO_PORT_27017_TCP_ADDR" ]; then
     generate_mongo_docker "$database_mongoid_yml_path"
-    return
   fi
 
   # Check if there is a linked docker postgresql instance
@@ -152,7 +151,7 @@ generate_mongo_docker() {
     warn "MYSQL_PASSWORD env var for the mysql service is not set"
   fi
 
-  info "Generating mysql docker template"
+  info "Generating mongoid docker template"
   tee "$location" << EOF
 test:
   sessions:
