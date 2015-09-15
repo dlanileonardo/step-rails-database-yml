@@ -157,7 +157,7 @@ generate_mongo_docker() {
 test:
   sessions:
     default:
-      database: <%= ENV['MONGO_DATABASE'] || %><%= ENV['TEST_ENV_NUMBER'] %>
+      database: <%= ENV['MONGO_DATABASE'] || "database_test" %><%= ENV['TEST_ENV_NUMBER'] %>
       hosts:
         - <%= ENV['MONGO_PORT_27017_TCP_ADDR'] %>:<%= env['MONGO_PORT_27017_TCP_PORT'] %>
       options:
