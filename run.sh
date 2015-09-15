@@ -75,7 +75,7 @@ main() {
     return
   fi
 
-  fail 'Unable to auto detect service; please set "service" option'
+  # fail 'Unable to auto detect service; please set "service" option'
 }
 
 # generate_postgresql_docker $location
