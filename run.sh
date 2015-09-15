@@ -158,7 +158,7 @@ test:
     default:
       database: <%= ENV['MONGO_DATABASE'] || "database_test" %><%= ENV['TEST_ENV_NUMBER'] %>
       hosts:
-        - <%= ENV['MONGO_PORT_27017_TCP_ADDR'] %>:<%= env['MONGO_PORT_27017_TCP_PORT'] %>
+        - <%= ENV['MONGO_PORT_27017_TCP_ADDR'] %>:<%= ENV['MONGO_PORT_27017_TCP_PORT'] %>
       options:
         read: primary
         max_retries: 1
