@@ -2,6 +2,7 @@
 
 main() {
   local database_yml_path="$PWD/config/database.yml"
+  local database_mongoid_yml_path="$PWD/config/mongoid.yml"
 
   if [ -f "$database_yml_path" ]; then
     debug 'config/database.yml already exists and will be overwritten'
@@ -38,6 +39,12 @@ main() {
   fi
 
   info "Auto detecting service"
+
+  # Check if there is a linked docker postgresql instance
+  if [ -n "$MONGO_PORT_27017_TCP_ADDR" ]; then
+    generate_mongo_docker "$database_mongoid_yml_path"
+    return
+  fi
 
   # Check if there is a linked docker postgresql instance
   if [ -n "$POSTGRES_PORT_5432_TCP_ADDR" ]; then
@@ -129,6 +136,34 @@ test:
     username: <%= ENV['WERCKER_POSTGRESQL_USERNAME'] %>
     password: <%= ENV['WERCKER_POSTGRESQL_PASSWORD'] %>
     min_messages: $WERCKER_RAILS_DATABASE_YML_POSTGRESQL_MIN_MESSAGE
+EOF
+}
+
+# generate_mysql_docker $location
+# generate a database.yml based on docker links
+generate_mongo_docker() {
+  local location="${1:?'location is required'}"
+
+  if [ -z "$MONGO_PORT_27017_TCP_ADDR" ]; then
+    warn "MYSQL_USER env var for the mysql service is not set"
+  fi
+
+  if [ -z "$MONGO_PORT_27017_TCP_PORT" ]; then
+    warn "MYSQL_PASSWORD env var for the mysql service is not set"
+  fi
+
+  info "Generating mysql docker template"
+  tee "$location" << EOF
+test:
+  sessions:
+    default:
+      database: <%= ENV['MONGO_DATABASE'] || %><%= ENV['TEST_ENV_NUMBER'] %>
+      hosts:
+        - <%= ENV['MONGO_PORT_27017_TCP_ADDR'] %>:<%= env['MONGO_PORT_27017_TCP_PORT'] %>
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0
 EOF
 }
 
