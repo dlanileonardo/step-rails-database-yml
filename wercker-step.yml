@@ -1,3 +1,13 @@
 name: rails-database-yml
-version: 0.0.1
+version: 0.0.2
 description: rails-database-yml step
+keywords:
+  - rails
+  - ruby
+  - mysql
+  - mongoid
+  - yml
+  - postgres
+  - database.yml
+  - mongoid.yml
+
