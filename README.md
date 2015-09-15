@@ -63,25 +63,3 @@ test:
     port: <%= ENV['WERCKER_POSTGRESQL_PORT'] %>
     min_messages: warning
 ```
-
-# Changelog
-
-## 1.1.0
-
-- Add support for the ewok stack.
-
-## 1.0.0
-
-- Add `postgresql-min-message` parameter
-
-## 0.9.3
-
-- Use `$PWD` instead of `$WERCKER_ROOT_DIR`
-
-## 0.9.2
-
-- Adds environment variable `TEST_ENV_NUMBER` to the database name
-
-## 0.9.1
-
-- Initial version
